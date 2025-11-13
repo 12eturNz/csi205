@@ -1,0 +1,182 @@
+import React, { useState, useContext, useEffect } from "react";
+import { CartContext } from "../context/CartContext";
+
+function Products() {
+  const { addToCart } = useContext(CartContext);
+
+  // 🔹 สร้างสินค้าเริ่มต้น (mock data)
+  const [products, setProducts] = useState([]);
+
+  // 🔹 จำลองการโหลดสินค้า (จาก API)
+  useEffect(() => {
+    const sampleProducts = [
+    { id: 1, name: "สิงโต", price: 18.25, color: "#FF6347" },
+{ id: 2, name: "ช้าง", price: 14.99, color: "#8A2BE2" },
+{ id: 3, name: "ปลาฉลาม", price: 42.50, color: "#228B22" },
+{ id: 4, name: "เสือ", price: 16.75, color: "#FF8C00" },
+{ id: 5, name: "มังกรไฟ", price: 11.60, color: "#FF0000" },
+{ id: 6, name: "กวาง", price: 38.40, color: "#ADFF2F" },
+{ id: 7, name: "กระต่ายป่า", price: 19.90, color: "#8B4513" },
+{ id: 8, name: "ม้า", price: 22.10, color: "#FFD700" },
+{ id: 9, name: "แมว", price: 17.30, color: "#FF1493" },
+{ id: 10, name: "เสือโคร่ง", price: 36.20, color: "#FF4500" },
+{ id: 11, name: "หมีขาว", price: 28.60, color: "#C0C0C0" },
+{ id: 12, name: "เต่า", price: 50.70, color: "#008080" },
+{ id: 13, name: "กระรอก", price: 44.20, color: "#D2691E" },
+{ id: 14, name: "ไดโนเสาร์", price: 29.75, color: "#C71585" },
+{ id: 15, name: "พะยูน", price: 33.50, color: "#7B68EE" },
+{ id: 16, name: "หมาป่า", price: 25.90, color: "#708090" },
+{ id: 17, name: "นกกระจอกเทศ", price: 34.10, color: "#FFD700" },
+{ id: 18, name: "ลิง", price: 21.45, color: "#8B0000" },
+{ id: 19, name: "ปลาหมึก", price: 41.60, color: "#2E8B57" },
+{ id: 20, name: "นกฮูก", price: 13.20, color: "#20B2AA" },
+{ id: 21, name: "หมูป่า", price: 26.80, color: "#CD5C5C" },
+{ id: 22, name: "หอยทาก", price: 30.40, color: "#8B4513" },
+{ id: 23, name: "เป็ด", price: 24.60, color: "#FFF8DC" },
+{ id: 24, name: "ปลาไหล", price: 40.20, color: "#483D8B" },
+{ id: 25, name: "นกกระทิง", price: 45.10, color: "#9ACD32" },
+{ id: 26, name: "แมงมุม", price: 17.85, color: "#DCDCDC" },
+{ id: 27, name: "หอยทาก", price: 23.45, color: "#4B0082" },
+{ id: 28, name: "จระเข้", price: 35.00, color: "#556B2F" },
+{ id: 29, name: "ค้างคาว", price: 31.70, color: "#2F4F4F" },
+{ id: 30, name: "นากน้ำ", price: 22.80, color: "#A52A2A" },
+{ id: 31, name: "ปลาดาว", price: 19.50, color: "#FF69B4" },
+{ id: 32, name: "เต่าทะเล", price: 27.10, color: "#B0E0E6" },
+{ id: 33, name: "แมงกะพรุน", price: 29.20, color: "#A9A9A9" },
+{ id: 34, name: "กวางเรนเดียร์", price: 25.30, color: "#BDB76B" },
+{ id: 35, name: "กระต่ายน้อย", price: 32.90, color: "#FF4500" },
+{ id: 36, name: "นกยูง", price: 39.80, color: "#00BFFF" },
+{ id: 37, name: "ผีเสื้อ", price: 21.00, color: "#F08080" },
+{ id: 38, name: "ลิงอุรังอุตัง", price: 42.10, color: "#A0522D" },
+{ id: 39, name: "สุนัข", price: 28.90, color: "#8B0000" },
+{ id: 40, name: "หมีสีขาว", price: 33.90, color: "#C0C0C0" },
+{ id: 41, name: "วาฬ", price: 41.20, color: "#4682B4" },
+{ id: 42, name: "แมวป่า", price: 37.00, color: "#F4A300" },
+{ id: 43, name: "ม้าลาย", price: 44.60, color: "#D3D3D3" },
+{ id: 44, name: "แมวสีดำ", price: 26.50, color: "#2F4F4F" },
+{ id: 45, name: "นกแก้ว", price: 35.40, color: "#DC143C" },
+{ id: 46, name: "เต่าบก", price: 18.60, color: "#556B2F" },
+{ id: 47, name: "กิ้งก่า", price: 40.70, color: "#D2691E" },
+{ id: 48, name: "นกพิราบ", price: 29.00, color: "#FFD700" },
+{ id: 49, name: "กระรอกบิน", price: 30.30, color: "#98FB98" },
+{ id: 50, name: "แมวสีส้ม", price: 14.70, color: "#FFA500" }
+//       { id: 1, name: "สิงโต", price: 18.25, color: "#FF6347" },
+// { id: 2, name: "ช้าง", price: 14.99, color: "#8A2BE2" },
+// { id: 3, name: "ปลาฉลาม", price: 42.50, color: "#228B22" },
+// { id: 4, name: "เสือ", price: 16.75, color: "#FF8C00" },
+// { id: 5, name: "มังกรไฟ", price: 11.60, color: "#FF0000" },
+// { id: 6, name: "กวาง", price: 38.40, color: "#ADFF2F" },
+// { id: 7, name: "กระต่ายป่า", price: 19.90, color: "#8B4513" },
+// { id: 8, name: "ม้า", price: 22.10, color: "#FFD700" },
+// { id: 9, name: "แมว", price: 17.30, color: "#FF1493" },
+// { id: 10, name: "เสือโคร่ง", price: 36.20, color: "#FF4500" },
+// { id: 11, name: "หมีขาว", price: 28.60, color: "#C0C0C0" },
+// { id: 12, name: "เต่า", price: 50.70, color: "#008080" },
+// { id: 13, name: "กระรอก", price: 44.20, color: "#D2691E" },
+// { id: 14, name: "ไดโนเสาร์", price: 29.75, color: "#C71585" },
+// { id: 15, name: "พะยูน", price: 33.50, color: "#7B68EE" },
+// { id: 16, name: "หมาป่า", price: 25.90, color: "#708090" },
+// { id: 17, name: "นกกระจอกเทศ", price: 34.10, color: "#FFD700" },
+// { id: 18, name: "ลิง", price: 21.45, color: "#8B0000" },
+// { id: 19, name: "ปลาหมึก", price: 41.60, color: "#2E8B57" },
+// { id: 20, name: "นกฮูก", price: 13.20, color: "#20B2AA" },
+// { id: 21, name: "หมูป่า", price: 26.80, color: "#CD5C5C" },
+// { id: 22, name: "หอยทาก", price: 30.40, color: "#8B4513" },
+// { id: 23, name: "เป็ด", price: 24.60, color: "#FFF8DC" },
+// { id: 24, name: "ปลาไหล", price: 40.20, color: "#483D8B" },
+// { id: 25, name: "นกกระทิง", price: 45.10, color: "#9ACD32" },
+// { id: 26, name: "แมงมุม", price: 17.85, color: "#DCDCDC" },
+// { id: 27, name: "หอยทาก", price: 23.45, color: "#4B0082" },
+// { id: 28, name: "จระเข้", price: 35.00, color: "#556B2F" },
+// { id: 29, name: "ค้างคาว", price: 31.70, color: "#2F4F4F" },
+// { id: 30, name: "นากน้ำ", price: 22.80, color: "#A52A2A" },
+// { id: 31, name: "ปลาดาว", price: 19.50, color: "#FF69B4" },
+// { id: 32, name: "เต่าทะเล", price: 27.10, color: "#B0E0E6" },
+// { id: 33, name: "แมงกะพรุน", price: 29.20, color: "#A9A9A9" },
+// { id: 34, name: "กวางเรนเดียร์", price: 25.30, color: "#BDB76B" },
+// { id: 35, name: "กระต่ายน้อย", price: 32.90, color: "#FF4500" },
+// { id: 36, name: "นกยูง", price: 39.80, color: "#00BFFF" },
+// { id: 37, name: "ผีเสื้อ", price: 21.00, color: "#F08080" },
+// { id: 38, name: "ลิงอุรังอุตัง", price: 42.10, color: "#A0522D" },
+// { id: 39, name: "สุนัข", price: 28.90, color: "#8B0000" },
+// { id: 40, name: "หมีสีขาว", price: 33.90, color: "#C0C0C0" },
+// { id: 41, name: "วาฬ", price: 41.20, color: "#4682B4" },
+// { id: 42, name: "แมวป่า", price: 37.00, color: "#F4A300" },
+// { id: 43, name: "ม้าลาย", price: 44.60, color: "#D3D3D3" },
+// { id: 44, name: "แมวสีดำ", price: 26.50, color: "#2F4F4F" },
+// { id: 45, name: "นกแก้ว", price: 35.40, color: "#DC143C" },
+// { id: 46, name: "เต่าบก", price: 18.60, color: "#556B2F" },
+// { id: 47, name: "กิ้งก่า", price: 40.70, color: "#D2691E" },
+// { id: 48, name: "นกพิราบ", price: 29.00, color: "#FFD700" },
+// { id: 49, name: "กระรอกบิน", price: 30.30, color: "#98FB98" },
+// { id: 50, name: "แมวสีส้ม", price: 14.70, color: "#FFA500" }
+
+    ];
+    setProducts(sampleProducts);
+  }, []);
+  
+  // ✅ เมื่อกด Add to cart
+  const handleAddToCart = (product) => {
+    addToCart(product); // เพิ่มเข้าตะกร้า
+    setProducts(products.filter((p) => p.id !== product.id)); // ลบออกจากหน้า products
+  };
+
+  return (
+    <div style={{ padding: "20px", textAlign: "center" }}>
+      <h2>Products Page</h2>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "20px",
+          maxWidth: "900px",
+          margin: "20px auto",
+        }}
+      >
+        {products.map((product) => (
+          <div
+            key={product.id}
+            style={{
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              padding: "15px",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                width: "150px",
+                height: "150px",
+                backgroundColor: product.color,
+                margin: "0 auto 10px",
+              }}
+            ></div>
+
+            <p>{product.name}</p>
+            <p style={{ fontWeight: "bold" }}>${product.price.toFixed(2)}</p>
+            <button
+              onClick={() => handleAddToCart(product)}
+              style={{
+                backgroundColor: "#007bff",
+                color: "white",
+                border: "none",
+                padding: "8px 12px",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
+              Add to cart
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* ถ้าสินค้าหมด */}
+      {products.length === 0 && <p style={{ marginTop: "30px" }}>🛒 All items are in your cart!</p>}
+    </div>
+  );
+}
+
+export default Products;
